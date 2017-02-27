@@ -1,4 +1,5 @@
-import { noop } from 'lodash';
+import { blue500 } from 'material-ui/styles/colors';
+import { extend, noop, pick } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -26,6 +27,22 @@ const onDrag = (elem, onMove, onUp = noop) => {
 };
 
 export default class Canvas extends React.Component {
+    static propTypes = {
+        context: React.PropTypes.shape({
+            lineCap: React.PropTypes.string,
+            lineWidth: React.PropTypes.number,
+            strokeStyle: React.PropTypes.string
+        })
+    };
+
+    static defaultProps = {
+        context: {
+            lineCap: 'round',
+            lineWidth: 3,
+            strokeStyle: blue500
+        }
+    };
+
     render() {
         return (
             <div style={ styles.container }>
@@ -42,15 +59,14 @@ export default class Canvas extends React.Component {
         canvas.width = canvas.parentElement.clientWidth;
         canvas.height = canvas.parentElement.clientHeight;
 
+        extend(context, pick(this.props.context, ['lineCap', 'lineWidth', 'strokeStyle']));
+
         canvas.addEventListener('mousedown', (downEvt) => {
             // Only left clicks.
             if (downEvt.which === 1) {
                 let pos = getRelativePos(downEvt, canvas); // Get initial position.
 
                 // Can dynamically set context properties here.
-                context.lineCap = 'round';
-                context.lineWidth = 3;
-                context.strokeStyle = '#2196F3';
 
                 onDrag(canvas, (moveEvt) => {
                     context.beginPath();
