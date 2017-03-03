@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 import styles from './styles';
 
-const getRelativePos = (evt, elem) => {
+const getRelativePos = (elem, evt) => {
     const rect = elem.getBoundingClientRect();
 
     return {
@@ -14,7 +14,7 @@ const getRelativePos = (evt, elem) => {
     };
 };
 
-const onDrag = (elem, onMove, onUp = noop) => {
+const addMoveEventListener = (elem, onMove, onUp = noop) => {
     const onEnd = (evt) => {
         elem.removeEventListener('mousemove', onMove);
         elem.removeEventListener('mouseup', onEnd);
@@ -32,7 +32,11 @@ export default class Canvas extends React.Component {
             lineCap: React.PropTypes.string,
             lineWidth: React.PropTypes.number,
             strokeStyle: React.PropTypes.string
-        })
+        }),
+
+        onDown: React.PropTypes.func,
+        onMove: React.PropTypes.func,
+        onUp: React.PropTypes.func
     };
 
     static defaultProps = {
@@ -40,7 +44,11 @@ export default class Canvas extends React.Component {
             lineCap: 'round',
             lineWidth: 3,
             strokeStyle: blue500
-        }
+        },
+
+        onDown: noop,
+        onMove: noop,
+        onUp: noop
     };
 
     render() {
@@ -54,6 +62,7 @@ export default class Canvas extends React.Component {
     componentDidMount() {
         const canvas = ReactDOM.findDOMNode(this.refs.canvas);
         const context = canvas.getContext('2d');
+        const { onDown, onMove, onUp } = this.props;
 
         // Perhaps make these big enough for all screen sizes.
         canvas.width = canvas.parentElement.clientWidth;
@@ -64,20 +73,23 @@ export default class Canvas extends React.Component {
         canvas.addEventListener('mousedown', (downEvt) => {
             // Only left clicks.
             if (downEvt.which === 1) {
-                let pos = getRelativePos(downEvt, canvas); // Get initial position.
+                let pos = getRelativePos(canvas, downEvt); // Get initial position.
 
                 // Can dynamically set context properties here.
 
-                onDrag(canvas, (moveEvt) => {
+                onDown(pos);
+
+                addMoveEventListener(canvas, (moveEvt) => {
                     context.beginPath();
                     context.moveTo(pos.x, pos.y);
 
-                    pos = getRelativePos(moveEvt, canvas); // Update position.
+                    pos = getRelativePos(canvas, moveEvt); // Update position.
 
                     context.lineTo(pos.x, pos.y);
                     context.stroke(); // Draw segment.
+                    onMove(pos);
                 }, (upEvt) => {
-                    console.log("finished drawing");
+                    onUp(pos);
                 });
 
                 downEvt.preventDefault();
