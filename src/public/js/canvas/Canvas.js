@@ -26,6 +26,8 @@ const addMoveEventListener = (elem, onMove, onUp = noop) => {
     elem.addEventListener('mouseup', onEnd);
 };
 
+const canvases = new WeakMap();
+
 export default class Canvas extends React.Component {
     static propTypes = {
         context: React.PropTypes.shape({
@@ -54,13 +56,13 @@ export default class Canvas extends React.Component {
     render() {
         return (
             <div style={ styles.container }>
-                <canvas ref="canvas"></canvas>
+                <canvas ref={ (elem) => { canvases.set(this, elem); } }></canvas>
             </div>
         );
     }
 
     componentDidMount() {
-        const canvas = ReactDOM.findDOMNode(this.refs.canvas);
+        const canvas = ReactDOM.findDOMNode(canvases.get(this));
         const context = canvas.getContext('2d');
         const { onDown, onMove, onUp } = this.props;
 
