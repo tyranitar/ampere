@@ -7,7 +7,7 @@ const babelLoader = {
     loader: 'babel-loader',
 
     query: {
-        presets: [ 'react', 'es2015' ]
+        presets: [ 'react', 'es2015', 'stage-0' ]
     }
 };
 
@@ -15,7 +15,7 @@ module.exports = {
     context: path.join(__dirname, 'src', 'public', 'js'),
 
     entry: [
-        './index.js'
+        './app.js'
     ],
 
     module: {
@@ -24,6 +24,6 @@ module.exports = {
 
     output: {
         path: path.join(__dirname, 'src', 'public', 'js'),
-        filename: 'index.min.js'
+        filename: 'app.min.js'
     }
 }
