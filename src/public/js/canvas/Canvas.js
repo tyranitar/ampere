@@ -5,6 +5,10 @@ import ReactDOM from 'react-dom';
 
 import styles from './styles';
 
+const canvases = new WeakMap();
+const pixelLen = 4; // Size of RGBA data.
+const rgbLen = 3; // Size of RGB data.
+
 const getRelativePos = (elem, evt) => {
     const rect = elem.getBoundingClientRect();
 
@@ -26,7 +30,22 @@ const addMoveEventListener = (elem, onMove, onUp = noop) => {
     elem.addEventListener('mouseup', onEnd);
 };
 
-const canvases = new WeakMap();
+const getCanvasAndContext = (instance) => {
+    let canvas = null;
+    let context = null;
+
+    try {
+        canvas = ReactDOM.findDOMNode(canvases.get(instance));
+        context = canvas.getContext('2d');
+    } catch (err) {
+        throw "canvas has not been mounted yet";
+    }
+
+    return {
+        canvas,
+        context
+    };
+}
 
 export default class Canvas extends React.Component {
     static propTypes = {
@@ -53,6 +72,24 @@ export default class Canvas extends React.Component {
         onUp: noop
     };
 
+    static getBinaryPixelValue(imageData, x, y) {
+        // Out of bounds.
+        if (x < 0 || x >= imageData.width || y < 0 || y >= imageData.height) {
+            return null;
+        }
+
+        const pixelIdx = pixelLen * (x + imageData.width * y);
+        const data = imageData.data;
+
+        for (let i = 0; i < rgbLen; i++) {
+            if (data[pixelIdx + i] > 0) {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
     render() {
         return (
             <div style={ styles.container }>
@@ -62,8 +99,7 @@ export default class Canvas extends React.Component {
     }
 
     componentDidMount() {
-        const canvas = ReactDOM.findDOMNode(canvases.get(this));
-        const context = canvas.getContext('2d');
+        const { canvas, context } = getCanvasAndContext(this);
         const { onDown, onMove, onUp } = this.props;
 
         // Perhaps make these big enough for all screen sizes.
@@ -97,5 +133,17 @@ export default class Canvas extends React.Component {
                 downEvt.preventDefault();
             }
         });
+    }
+
+    getImageData() {
+        const { canvas, context } = getCanvasAndContext(this);
+
+        return context.getImageData(0, 0, canvas.width, canvas.height);
+    }
+
+    putImageData(imageData, x, y) {
+        const { canvas, context } = getCanvasAndContext(this);
+
+        context.putImageData(imageData, x, y);
     }
 }
