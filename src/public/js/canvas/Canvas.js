@@ -100,7 +100,11 @@ export default class Canvas extends React.Component {
 
     componentDidMount() {
         const { canvas, context } = getCanvasAndContext(this);
-        const { onDown, onMove, onUp } = this.props;
+        let { onDown, onMove, onUp } = this.props;
+
+        onDown = onDown.bind(this);
+        onMove = onMove.bind(this);
+        onUp = onUp.bind(this);
 
         // Perhaps make these big enough for all screen sizes.
         canvas.width = canvas.parentElement.clientWidth;
