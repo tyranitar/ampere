@@ -150,4 +150,22 @@ export default class Canvas extends React.Component {
 
         context.putImageData(imageData, x, y);
     }
+
+    drawLine(x1, y1, x2, y2, strokeStyle) {
+        const { canvas, context } = getCanvasAndContext(this);
+        const originalStrokeStyle = context.strokeStyle;
+
+        if (strokeStyle) {
+            context.strokeStyle = strokeStyle;
+        }
+
+        context.beginPath();
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.stroke();
+
+        if (strokeStyle) {
+            context.strokeStyle = originalStrokeStyle;
+        }
+    }
 }

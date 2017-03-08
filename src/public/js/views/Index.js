@@ -59,6 +59,12 @@ const getCanvasProps = () => {
                 console.log("stopped drawing");
                 console.log(bounds);
 
+                // For debugging.
+                this.drawLine(bounds.minX, bounds.minY, bounds.maxX, bounds.minY, 'black');
+                this.drawLine(bounds.minX, bounds.minY, bounds.minX, bounds.maxY, 'black');
+                this.drawLine(bounds.maxX, bounds.minY, bounds.maxX, bounds.maxY, 'black');
+                this.drawLine(bounds.minX, bounds.maxY, bounds.maxX, bounds.maxY, 'black');
+
                 bounds = null;
                 drawing = false;
             }, drawingInterval);
