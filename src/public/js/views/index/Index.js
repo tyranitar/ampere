@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Canvas from '../canvas/Canvas';
+import Canvas from '../../canvas/Canvas';
 
 const drawingInterval = 2000;
 
