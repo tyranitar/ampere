@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Canvas from '../../canvas/Canvas';
+import config from '../../config/index.json';
 
 const drawingInterval = 2000;
 
@@ -57,13 +58,13 @@ const getCanvasProps = () => {
         onUp: function (pos) {
             timeout = setTimeout(() => {
                 console.log("stopped drawing");
-                console.log(bounds);
 
-                // For debugging.
-                this.drawLine(bounds.minX, bounds.minY, bounds.maxX, bounds.minY, 'black');
-                this.drawLine(bounds.minX, bounds.minY, bounds.minX, bounds.maxY, 'black');
-                this.drawLine(bounds.maxX, bounds.minY, bounds.maxX, bounds.maxY, 'black');
-                this.drawLine(bounds.minX, bounds.maxY, bounds.maxX, bounds.maxY, 'black');
+                if (config.debug.bounds) {
+                    this.drawLine(bounds.minX, bounds.minY, bounds.maxX, bounds.minY, 'black');
+                    this.drawLine(bounds.minX, bounds.minY, bounds.minX, bounds.maxY, 'black');
+                    this.drawLine(bounds.maxX, bounds.minY, bounds.maxX, bounds.maxY, 'black');
+                    this.drawLine(bounds.minX, bounds.maxY, bounds.maxX, bounds.maxY, 'black');
+                }
 
                 bounds = null;
                 drawing = false;
