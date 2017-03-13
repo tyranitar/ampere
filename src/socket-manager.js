@@ -1,0 +1,1 @@
+// Manages circuit rooms and corresponding sockets.
