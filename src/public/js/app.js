@@ -5,7 +5,7 @@ import { Router, Route, useRouterHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import Index from './views/Index';
+import Index from './views/index/Index';
 
 const history = useRouterHistory(createHistory)();
 const app = document.getElementById('app');
