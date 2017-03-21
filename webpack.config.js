@@ -26,4 +26,4 @@ module.exports = {
         path: path.join(__dirname, 'src', 'public', 'js'),
         filename: 'app.min.js'
     }
-}
+};
