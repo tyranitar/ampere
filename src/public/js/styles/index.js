@@ -13,6 +13,11 @@ export default {
         width: '100%'
     },
 
+    container: {
+        display: 'flex',
+        justifyContent: 'center'
+    },
+
     btnStyleLarge: {
         margin: `${ btnMarginLarge }px`,
         width: `${ btnSizeLarge }px`,

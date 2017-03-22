@@ -6,10 +6,5 @@ export default {
         fontSize: '100px',
         color: blue500,
         marginBottom: '50px'
-    },
-
-    containerStyle: {
-        display: 'flex',
-        justifyContent: 'center'
     }
 };
