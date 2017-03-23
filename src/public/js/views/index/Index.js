@@ -13,21 +13,21 @@ export default class Index extends React.Component {
         return (
             <HeaderContainer>
                 <div>
-                    <IconButton { ...sharedProps.iconButton }>
+                    <IconButton { ...sharedProps.iconButtonLarge }>
                         <Create />
                     </IconButton>
 
                     <span style={ sharedStyles.subtitleStyle }>Create Circuit</span>
                 </div>
                 <div>
-                    <IconButton { ...sharedProps.iconButton }>
+                    <IconButton { ...sharedProps.iconButtonLarge }>
                         <List />
                     </IconButton>
 
                     <span style={ sharedStyles.subtitleStyle }>Join Circuit</span>
                 </div>
                 <div>
-                    <IconButton { ...sharedProps.iconButton }>
+                    <IconButton { ...sharedProps.iconButtonLarge }>
                         <School />
                     </IconButton>
 

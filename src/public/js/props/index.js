@@ -3,7 +3,7 @@ import { blue500, blue600, blue700, white } from 'material-ui/styles/colors';
 import sharedStyles from '../styles/index';
 
 export default {
-    iconButton: {
+    iconButtonLarge: {
         style: sharedStyles.btnStyleLarge,
         iconStyle: sharedStyles.iconStyleLarge
     },

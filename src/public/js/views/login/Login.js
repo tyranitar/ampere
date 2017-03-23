@@ -26,11 +26,11 @@ export default class Login extends React.Component {
     }
 
     render() {
-        const lightbulbProps = this.state.lit ? merge({}, sharedProps.iconButton, {
+        const lightbulbProps = this.state.lit ? merge({}, sharedProps.iconButtonLarge, {
             iconStyle: {
                 fill: yellow500
             }
-        }) : sharedProps.iconButton;
+        }) : sharedProps.iconButtonLarge;
 
         return (
             <HeaderContainer>
