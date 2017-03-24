@@ -9,10 +9,6 @@ export default {
         float: 'right'
     },
 
-    title: {
-        color: blue500
-    },
-
     textField: {
         width: '100%'
     }

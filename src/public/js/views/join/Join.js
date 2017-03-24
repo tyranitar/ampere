@@ -4,6 +4,7 @@ export default class Join extends React.Component {
     render() {
         return (
             <div>
+                Join
             </div>
         );
     }
