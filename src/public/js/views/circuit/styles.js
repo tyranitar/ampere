@@ -1,8 +1,8 @@
 export default {
     executeButtonContainer: {
         position: 'absolute',
-        bottom: '0px',
-        right: '0px',
+        bottom: '25px',
+        right: '25px',
         pointerEvents: 'none'
     }
 };
