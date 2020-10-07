@@ -1,3 +1,11 @@
+html {
+    font-family: 'Ubuntu';
+}
+
+html, body, #app {
+    height: 100%;
+}
+
 body {
-  margin: 0;
+    margin: 0;
 }

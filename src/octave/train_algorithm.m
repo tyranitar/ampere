@@ -1,0 +1,1 @@
+% Trains algorithm based on given data directory.
